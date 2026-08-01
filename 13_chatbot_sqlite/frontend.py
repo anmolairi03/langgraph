@@ -2,7 +2,9 @@ import streamlit as st
 from backend import bot, retrieve_all_threads, chat_name_llm
 from langchain_core.messages import HumanMessage
 import uuid
+import os
 
+os.environ['LANGCHAIN_PROJECT'] = 'Chatbot'
 ################################## utility funcs ##########################################
 
 def get_thread_id():
@@ -213,7 +215,11 @@ if user_input:
                     config={
                         'configurable': {
                             'thread_id': st.session_state['session_thread']
-                        }
+                        },
+                        'metadata': {
+                            'thread_id': st.session_state['session_thread']
+                        },
+                        'run_name': 'chat_turn'
                     },
                     stream_mode='messages'
                 ):
