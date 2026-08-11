@@ -4,6 +4,7 @@ from utils import generate_short_code, ShortenRequest, ShortenResponse
 from sqlalchemy.orm import Session
 from db import get_db, URL
 from caching import r
+from rate_limiter import rate_limiter_dependency
 
 app = FastAPI()
 
@@ -12,7 +13,7 @@ app = FastAPI()
 def home():
     return {'message': 'This is homepage'}
 
-@app.post('/shorten')
+@app.post('/shorten', dependencies=[Depends(rate_limiter_dependency(max_capacity = 5, refill_rate= 2, redis_client = r))])
 def shorten_url(request: ShortenRequest, db: Session = Depends(get_db)):
     rand_id = generate_short_code(db, request.long_url)
     shortURL = f"http://localhost:8888/{rand_id}"

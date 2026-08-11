@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: rate-limiter
+Version: 0.1.0
+Summary: A reusable token-bucket rate limiter for FastAPI
+Requires-Dist: fastapi
+Requires-Dist: redis

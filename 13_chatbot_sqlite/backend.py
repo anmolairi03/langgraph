@@ -59,3 +59,4 @@ class ChatNameSchema(BaseModel):
     
 chat_name_llm = model.with_structured_output(ChatNameSchema)
 
+
